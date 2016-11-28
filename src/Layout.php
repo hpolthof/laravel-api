@@ -47,7 +47,7 @@ class Layout
         ];
 
         $content = $this->renderData($this->data);
-        return json_encode(array_filter(compact('header', 'content')), JSON_PRETTY_PRINT | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT);
+        return json_encode(compact('header', 'content'), JSON_PRETTY_PRINT | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT);
     }
 
     /**
@@ -64,7 +64,7 @@ class Layout
      * @param mixed $source
      * @return mixed
      */
-    protected static function renderData($source):array
+    protected static function renderData($source)
     {
         if (is_array($source) || $source instanceof Collection) {
             $data = [];
