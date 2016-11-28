@@ -1,0 +1,28 @@
+{
+  "name": "hpolthof/laravel-api",
+  "description": "An API rendering package for Laravel 5",
+  "license": "GPL2",
+  "keywords": ["laravel", "api", "REST", "json"],
+  "authors": [
+    {
+      "name": "Paul Olthof",
+      "email": "hpolthof@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "laravel/laravel": "5.*",
+    "illuminate/collection": "5.*"
+  },
+
+  "autoload": {
+    "psr-4": {
+      "Hpolthof\\LaravelAPI\\": "src"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.1.x-dev"
+    }
+  }
+}
