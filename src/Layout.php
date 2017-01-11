@@ -20,11 +20,12 @@ class Layout
     /**
      * @param $message
      * @param int $httpStatus
+     * @param mixed $content
      * @return Response
      */
-    public static function responseMessage($message, $httpStatus = 200)
+    public static function responseMessage($message, $httpStatus = 200, $content = null)
     {
-        $layout = new static([], $httpStatus, $message);
+        $layout = new static($content, $httpStatus, $message);
         return $layout->getResponse();
     }
 
@@ -56,7 +57,7 @@ class Layout
     public function getResponse()
     {
         return new Response($this->render(), $this->httpStatus, [
-            'Content-type' => 'application/javascript',
+            'Content-type' => 'application/json',
         ]);
     }
 

@@ -8,6 +8,8 @@ use Hpolthof\LaravelAPI\Exceptions\HttpStatusException;
 use Hpolthof\LaravelAPI\Exceptions\NotFoundException;
 use Hpolthof\LaravelAPI\Layout;
 use Illuminate\Http\Response;
+use Illuminate\Support\MessageBag;
+use Illuminate\Validation\ValidationException;
 
 class APIErrors
 {
@@ -35,10 +37,25 @@ class APIErrors
         catch (APIException $e) {
             return Layout::responseMessage($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+        catch (ValidationException $e) {
+            $errors = self::array_undot($e->validator->errors()->toArray());
+            return Layout::responseMessage($e->getMessage(), Response::HTTP_BAD_REQUEST, (object)$errors);
+        }
         catch (\Exception $e) {
-            return Layout::responseMessage(Response::$statusTexts[Response::HTTP_INTERNAL_SERVER_ERROR], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return Layout::responseMessage(config('app.debug')?$e->getMessage():Response::$statusTexts[Response::HTTP_INTERNAL_SERVER_ERROR], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return $response;
+    }
+
+    protected static function array_undot($array)
+    {
+        $result = [];
+
+        foreach($array as $key => $value) {
+            array_set($result, $key, $value);
+        }
+
+        return $result;
     }
 }
